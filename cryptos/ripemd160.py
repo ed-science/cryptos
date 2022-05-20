@@ -52,8 +52,7 @@ def ripemd160(b: bytes) -> bytes:
     """ simple wrapper for a simpler API to this hash function, just bytes to bytes """
     ctx = RMDContext()
     RMD160Update(ctx, b, len(b))
-    digest = RMD160Final(ctx)
-    return digest
+    return RMD160Final(ctx)
 
 # -----------------------------------------------------------------------------
 
@@ -134,7 +133,7 @@ def RMD160Transform(state, block): #uint32 state[5], uchar block[64]
 
     x = [0]*16
     assert sys.byteorder == 'little', "Only little endian is supported atm for RIPEMD160"
-    x = struct.unpack('<16L', bytes(block[0:64]))
+    x = struct.unpack('<16L', bytes(block[:64]))
 
     a = state[0]
     b = state[1]
